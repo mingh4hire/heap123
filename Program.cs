@@ -20,6 +20,10 @@ namespace ConsoleApp1
             l[i] = l[j];
             l[j] = d;
         }
+        public int Peek()
+        {
+            return (int)l[0];
+        }
         public void Add(int i)
         {
             this.cnt++;
@@ -94,18 +98,80 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            List<int> ns = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
             Console.WriteLine("Hello World!");
-            var h = new Heap(false);
-            h.Add(3);
-            h.Add(4);
-            h.Add(234);
-            h.Add(11);
-            h.Print();
-           var r= h.Remove();
-            Console.WriteLine(r);
+            var hTop = new Heap(false);
+            var hBottom = new Heap();
+            hTop.Add(ns[0]);   
 
-            h.Print();
-            
+            for (int i =0; i < ns.Count; i++)
+            {
+                if (i == 0)
+                {
+                    hBottom.Add(ns[i]);
+                    continue;
+                }
+                if (i == 1)
+                {
+                    var r= hBottom.Remove();
+                    if (r < ns[i])
+                    {
+                        hBottom.Add(r);
+                        hTop.Add(ns[i]);
+                        continue;
+                    }
+                    else
+                    {
+                        hBottom.Add(ns[i]);
+                        hBottom.Add(r);
+                    }
+                }
+                else if (i % 2 == 0)
+                {
+                    var higher = hTop.Remove();
+                    if (ns[i]  < higher)
+                    {
+                        hBottom.Add(ns[i]);
+                        hTop.Add(higher);
+                    }
+                    else
+                    {
+                        hTop.Add(ns[i]);
+                        hBottom.Add(higher);
+                    }
+                }
+                else
+                {
+                    if (ns[i] < hBottom.Peek())
+                    {
+                        hTop.Add(hBottom.Remove());
+
+                        var r = hBottom.Remove();
+                        if (r < ns[i])
+                        {
+                            hTop.Add(ns[i]);
+                            hBottom.Add(r);
+                        }
+                        else
+                        {
+                            hTop.Add(r);
+                            hBottom.Add(ns[i]);
+                        }
+                    }
+                    else
+                    {
+                        hTop.Add(ns[i]);
+                    }
+                }
+            }    
+            if (ns.Count % 2 == 0)
+            {
+                Console.WriteLine(hTop.Peek());
+            }
+            else
+            {
+                Console.WriteLine(hTop.Peek() + " " + hBottom.Peek());
+            }
         }
     }
 }
