@@ -163,7 +163,13 @@ namespace ConsoleApp1
                         hTop.Add(ns[i]);
                     }
                 }
-            }    
+                hTop.Print();
+                hBottom.Print();
+            }
+            hTop.Print();
+            Console.WriteLine(  );
+            hBottom.Print();
+            Console.WriteLine();
             if (ns.Count % 2 == 0)
             {
                 Console.WriteLine(hTop.Peek());
