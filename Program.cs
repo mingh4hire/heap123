@@ -27,7 +27,14 @@ namespace ConsoleApp1
         public void Add(int i)
         {
             this.cnt++;
-            l.Add(i);
+            if (l.Count >= cnt)
+            {
+                l[cnt - 1] = i;
+            }
+            else
+            {
+                l.Add(i);
+            }
             var index = l.Count - 1;
             while (index > 0)
             {
