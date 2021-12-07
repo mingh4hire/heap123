@@ -87,7 +87,7 @@ namespace ConsoleApp1
         }
         public void Print()
         {
-            for(var i =0; i < l.Count; i++)
+            for(var i =0; i < cnt ; i++)
             {
                 Console.Write(l[i] + " ");
             }
@@ -102,28 +102,25 @@ namespace ConsoleApp1
             Console.WriteLine("Hello World!");
             var hTop = new Heap(false);
             var hBottom = new Heap();
-            hTop.Add(ns[0]);   
-
+ 
             for (int i =0; i < ns.Count; i++)
             {
                 if (i == 0)
                 {
                     hBottom.Add(ns[i]);
-                    continue;
-                }
-                if (i == 1)
+                 }
+                else if (i == 1)
                 {
                     var r= hBottom.Remove();
                     if (r < ns[i])
                     {
                         hBottom.Add(r);
                         hTop.Add(ns[i]);
-                        continue;
-                    }
+                     }
                     else
                     {
                         hBottom.Add(ns[i]);
-                        hBottom.Add(r);
+                        hTop.Add(r);
                     }
                 }
                 else if (i % 2 == 0)
@@ -163,6 +160,7 @@ namespace ConsoleApp1
                         hTop.Add(ns[i]);
                     }
                 }
+                Console.WriteLine(" i is " + i);
                 hTop.Print();
                 hBottom.Print();
             }
